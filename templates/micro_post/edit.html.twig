@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+{% form_theme formMicroPost 'bootstrap_4_layout.html.twig' %}
+
+
+{{form_start(formMicroPost)}}
+{{ form_errors(formMicroPost) }}
+{{form_row(formMicroPost.text,{'attr':{'rows':"6" ,'cols':"6",'style':"border:1px solid grey"}})}}
+
+<button type="submit" class="btn btn-success"> Edit </button>
+{{form_end(formMicroPost)}}
+{% endblock %}

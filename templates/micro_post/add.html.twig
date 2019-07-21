@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+{% form_theme formmicropost 'bootstrap_4_layout.html.twig' %}
+{% for message in app.flashes('notice') %}
+<div class="alert alert-success col-md-12">
+    {{message }}
+</div>
+{% endfor %}
+
+{{form_start(formmicropost)}}
+{{ form_errors(formmicropost) }}
+{{form_row(formmicropost.text,{'attr':{'placeholder':"Write a text for your post",'style':"border:1px solid grey",'cols':"6",'rows':"6"}})}}
+
+<button type="submit" class="btn btn-success"> Save </button>
+{{form_end(formmicropost)}}
+{% endblock %}

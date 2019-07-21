@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+{% for message in app.flashes('success') %}
+<div class="alert alert-danger col-md-12">
+    {{message }}
+</div>
+{% endfor %}
+{% for message in app.flashes('notice') %}
+<div class="alert alert-success col-md-12">
+    {{message }}
+</div>
+{% endfor %}
+<small class="d-block text-right mt-3">
+    <a href="{{path('micropost_create')}}">add new</a>
+    
+</small>
+<h6 class="border-bottom border-gray pb-2 mb-0">Recent updates from people you follow</h6>
+{% for post in posts%}
+<div class="media text-muted pt-3">
+   
+    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <span class="d-block">
+            {% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN') %}
+            <a href="{{path('micropost_user',{'fullname':post.user.fullname})}}">
+                <strong class="text-gray-dark">@{{post.user.fullname}} </strong>
+            </a>
+            {% endif %}
+
+            <small>{{post.time | date("m/d/Y")}}/{{post.time | date('H:i')}}</small></span>
+        {{post.text}} 
+    </p>
+</div>
+<small class="d-block text-right mt-3">
+    {% if is_granted('edit',post) %}
+    <a href="{{path('micropost_edit',{ 'id': post.id })}}">Edit</a>
+    {% endif %}
+    {% if is_granted('delete',post) %}
+    <a href="{{path('micropost_delete',{ 'id': post.id })}}">Delete</a>
+   
+      {% endif %}  
+      <a href="{{path('show_micropost',{'id':post.id})}}">view micropost </a>    
+</small>
+
+{% endfor %}
+
+
+{% endblock %}

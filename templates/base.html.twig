@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="stylesheet" href="{{ asset('asset/css/app.css') }}">
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    {% block stylesheets %}
+        
+    {% endblock %}
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-dark navbar-expand-md sticky-top bg-dark p-0">
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0"
+       href="{{path('index')}}">Micro Post App</a>
+    <div class="w-100 order-1 order-md-0">
+        <ul class="navbar-nav px-3">
+           
+                <li class="nav-item text-nowrap">
+                   <a href="{{path('micropost_create')}}">add new</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="order-2 order-md-1">
+        <ul class="navbar-nav px-3">
+           
+                <li class="nav-item text-nowrap border-right border-secondary">
+                    <a class="nav-link" href="#">
+                       notifications
+                        <span class="badge badge-light" id="notification-count">
+                            <i class="fa fa-circle fa-circle-o-notch fa-spin"></i>
+                        </span>
+                    </a>
+                </li>
+                {% if app.user %}
+                <li class="nav-item text-nowrap">
+                    <a class="nav-link"
+                       href="#">{{app.user.fullname}}</a>
+                </li>
+                
+                <li class="nav-item text-nowrap">
+                    <a class="nav-link"
+                       href="{{path('logout')}}">Signout</a>
+                </li>
+                {% else %}
+           
+                <li class="nav-item text-nowrap">
+                    <a class="nav-link"
+                       href="{{path('app_login')}}">Sign in</a>
+                </li>
+             {% endif %}
+        </ul>
+    </div>
+</nav>
+
+<main role="main" class="container">
+    <div class="my-3 p-3 bg-white rounded box-shadow">
+        {% block body %}
+        {% endblock %}
+    </div>
+</main>
+  <script src="{{ asset('asset/js/app.js') }}"></script>
+{% block javascripts %}
+    
+   
+
+    
+{% endblock %}
+</body>
+</html>

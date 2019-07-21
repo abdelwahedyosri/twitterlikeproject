@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="card-group py-2">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">
+                     {{user.fullname}}
+                    <small class="text-muted"> @{{user.fullname}} </small>
+                </h5>
+
+               {% if is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')   and user !=app.user %}
+               {% if user.followers.contains(app.user)==false%}
+                        <a href="{{path('following_follow',{'id':user.id})}}"
+                           class="btn btn-outline-primary">Follow</a>
+                  {% else %}
+                       
+                 <a href="{{path('following_unfollow',{'id':user.id})}}"
+                           class="btn btn-outline-danger">Unfollow</a>
+               {% endif %} 
+
+                
+                  {% endif %} 
+
+            </div>
+        </div>
+    </div>
+
+    <div class="card-group py-2">
+        <div class="card">
+            <div class="card-body">
+                <h5>followers </h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                {% for follower in user.followers %}
+                    <li class="list-group-item">
+                        <a href="{{path('micropost_user',{'fullname':follower.fullname})}}">
+                           {{follower.fullname}} 
+                        </a>
+                    </li>
+               {% endfor %}
+            </ul>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5>Following</h5>
+            </div>
+            <ul class="list-group list-group-flush">
+               
+                    {% for following in user.following %}
+                    <li class="list-group-item">
+                        <a href="{{path('micropost_user',{'fullname':following.fullname})}}">
+                           {{following.fullname}} 
+                        </a>
+                    </li>
+               {% endfor %}
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        <small class="d-block text-right mt-3">
+            
+                <a href="#">Edit</a>
+            
+                <a href="#">Delete</a>
+            
+        </small>
+    
+{% endblock %}
